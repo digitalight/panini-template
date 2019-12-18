@@ -143,11 +143,11 @@ function browserSyncInit(done) {
 
 // DEPLOY TO GIT
 function deploy() {
-  return src('/*')
+  return src('./dist/**/*')
     .pipe(ghPages({
-      remoteUrl: 'https://github.com/johndavemanuel/bootstrap4-gulp-starter-template.git',
-      branch: 'master',
-      message: 'Automated push of contents via gulp'
+      remoteUrl: 'git@github.com:digitalight/panini-template.git',
+      branch: 'gh-pages',
+      message: 'Updated [timestamp]'
     }));
 }
 
@@ -306,3 +306,6 @@ exports.dev = series(cleanDist, copyFont, jsVendor, cssVendor, copyImages, compi
 
 // PROD
 exports.prod = series(cleanDist, compileSCSS, copyFont, copyImages, compileHTML, concatScripts, minifyScripts, minifyCss, renameSources, prettyHTML, generateDocs, browserSyncInit);
+
+// DEPLOY
+exports.deploy = series(cleanDist, compileSCSS, copyFont, copyImages, compileHTML, concatScripts, minifyScripts, minifyCss, renameSources, prettyHTML, generateDocs, deploy);
